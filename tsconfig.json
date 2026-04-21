@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "nodenext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "strictNullChecks": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "noUncheckedIndexedAccess": true, // Adds undefined as a value when accessing by index
+    "noUnusedLocals": true, // helps you detect unused variable
+    "noUnusedParameters": true, // helps you detect unused function parameters
+    "noFallthroughCasesInSwitch": true, // helps you detect switch cases without break or return
+    "sourceMap": true // Enables source maps for easier debugging
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
