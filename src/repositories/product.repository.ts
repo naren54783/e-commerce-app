@@ -1,6 +1,7 @@
-import { Op } from "sequelize";
+import { Op, UniqueConstraintError } from "sequelize";
 import Product, { ProductData } from "../models/product.model";
 import { ProductFilters } from "../services/product.services";
+import { ConflictError } from "../errors/app-error";
 
 export const findAll = async (
   offset: number,
@@ -49,9 +50,23 @@ export const findByNames = async (names: string[]) => {
 };
 
 export const create = async (data: ProductData) => {
-  return Product.create(data as Record<string, unknown>);
+  try {
+    return await Product.create(data as Record<string, unknown>);
+  } catch (err) {
+    if (err instanceof UniqueConstraintError) {
+      throw new ConflictError("Product already exists");
+    }
+    throw err;
+  }
 };
 
 export const createBulk = async (dataList: ProductData[]) => {
-  return Product.bulkCreate(dataList as Record<string, unknown>[]);
+  try {
+    return await Product.bulkCreate(dataList as Record<string, unknown>[]);
+  } catch (err) {
+    if (err instanceof UniqueConstraintError) {
+      throw new ConflictError("One or more products already exist");
+    }
+    throw err;
+  }
 };
